@@ -8,6 +8,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SampleChartScreen from '../screens/SampleChartScreen';
 import CircularChartScreen from '../screens/CircularChartScreen';
+import LineDrawScreen from '../screens/LineDrawScreen';
 
 
 const config = Platform.select({
@@ -28,6 +29,11 @@ CircularChartStack.navigationOptions = {
   tabBarLabel: 'Circular',
 };
 
+// LineDraw
+const LineDrawChartStack = createStackNavigator({LineDrawScreen});
+LineDrawChartStack.navigationOptions = {
+  tabBarLabel: 'Line',
+};
 
 
 // tab
@@ -35,6 +41,7 @@ let tabNavigator = createBottomTabNavigator(
   {
     CircularChartStack,
     SampleChartStack,
+    LineDrawChartStack,
   },
   {
     tabBarOptions: {
