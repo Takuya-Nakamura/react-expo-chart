@@ -14,13 +14,6 @@ import * as d3shape from 'd3-shape'
 
 console.disableYellowBox = true
 
-// ART
-const {
-  Surface,
-  Group,
-  Shape,  
-} = ART
-
 // react-native-svg
 //import { Svg, G, Rect } from 'react-native-svg'
 import { Svg, G, Line, Rect, Text, Path, TextPath, Defs } from 'react-native-svg'
@@ -38,8 +31,8 @@ export default class CircularChart extends Component {
   renderButtons() {
     return (
       <View style={{ height: 60, marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-        <Button title="Chart" onPress={() => this.setState({ chart: 'Draw' })} />
-        <Button title="TextPath" onPress={() => this.setState({ chart: 'Path Test' })} />
+        <Button title="draw" onPress={() => this.setState({ chart: 'draw' })} />
+        <Button title="wire" onPress={() => this.setState({ chart: 'wire' })} />
       </View>
     )
   }
@@ -231,10 +224,10 @@ export default class CircularChart extends Component {
   render() {
     let chart
     switch (this.state.chart) {
-      case 'circle':
+      case 'draw':
         chart = this.renderArcChart()
         break
-      case 'textPath':
+      case 'wire':
         chart = this.renderBySvg()
         break
       default:

@@ -6,9 +6,8 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import ChartScreen from '../screens/ChartScreen';
 import SampleChartScreen from '../screens/SampleChartScreen';
-import SampleChartScreen2 from '../screens/CircularChartScreen';
+import CircularChartScreen from '../screens/CircularChartScreen';
 
 
 const config = Platform.select({
@@ -24,7 +23,7 @@ SampleChartStack.navigationOptions = {
 };
 
 // Circular
-const CircularChartStack = createStackNavigator({SampleChartScreen2});
+const CircularChartStack = createStackNavigator({CircularChartScreen});
 CircularChartStack.navigationOptions = {
   tabBarLabel: 'Circular',
 };
