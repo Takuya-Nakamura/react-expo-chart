@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+ 
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+ 
+    <script>
+        var width = 960;
+        var height = 700;
+ 
+        //svgインスタンス取得
+        //select 出力先のタグのこと
+        //append 要素を追加している。svgタグが追加されている。
+        //attr でattributeを設定
+        // var svg = d3.select("body").append("svg")
+        //     .attr("width", width) //width
+        //     .attr("height", height);
+
+        // svg.append("circle") //円のオブジェクトを追加
+        //     .attr("cx",50) //円の中心x座標
+        //     .attr("cy",50) //円の中心y座標
+        //     .attr("r",20)  //円の半径
+        //     .attr("fill","green") 
+        //     .attr("stroke-width",3)
+        //     .attr("stroke","orange");
+
+        // svg.append("rect")
+        //     .attr("x",100)
+        //     .attr("y",70)
+        //     .attr("width",50)
+        //     .attr("height",30)
+        //     .attr("fill","red");        
+
+        //描画される図形ってのは... rect circle line textぐらいみたい。あとは属性で曲げたりすんだろねぇ..
+
+        //*******************************//
+        //*********   scale  ************//
+        //*******************************//
+        // var gdp = [
+        //             {年: 2007, gdp: 524, 増減: "up"},
+        //             {年: 2008, gdp: 518, 増減: "down"},
+        //             {年: 2009, gdp: 490, 増減: "down"},
+        //             {年: 2010, gdp: 512, 増減: "up"},
+        //             {年: 2011, gdp: 510, 増減: "down"},
+        //             {年: 2012, gdp: 517, 増減: "up"},
+        //             {年: 2013, gdp: 525, 増減: "up"}
+        //         ];
+                    
+        // //データの幅を画面表示ようの幅に返還する仕組み.色の最大最小も設定できる..ごいす
+        // var width = 500;
+        // var height = 200;
+ 
+        // var svg = d3.select("body").append("svg")
+        //     .attr("width", width)
+        //     .attr("height", height);
+
+        // var xScale = d3.scale.linear() //linear()は、スケール変換した後の最大値と最小値の間の縮尺を、一定の割合で変えるということです。powなら指数関数的に、logなら対数的に変わります。logは最大と最小の差が激しいデータによく使います。
+        //                 .domain([2007, 2013]) //元の範囲の設定 これは単純にデータの値でOK　
+        //                 .range([10, width+10]) //出力時の範囲　これは広さで 左橋-右端のpx
+        // var yScale = d3.scale.linear()
+        //                 .domain([490, 525])
+        //                 .range([ height-10, 10 ])//一番上から、したから。
+        // var colorScale = d3.scale.linear()
+        //                     .domain([490, 525]) //
+        //                     .range(["blue", "red"])//490がblue 525がredで色のグラデーションをしてくれる
+
+        // //出力
+        // gdp.map(item => {
+        //     console.log(item["gdp"])
+        //     console.log(yScale(item["gdp"]))
+        // })
+
+        // svg.selectAll("circle") //dataをcircle要素にマップする
+        //     .data(gdp)
+        //     .enter()
+        //         .append("circle")//
+        //         .attr("r", 10) //半径
+        //         .attr("cx", (d)=>xScale(d["年"]) )//円のx座標 xScale()にデータの値を
+        //         .attr("cy", (d)=>yScale(d["gdp"]))//円のy座標
+        //         .attr("fill", (d)=>colorScale(d["gdp"]) )//円の色
+    </script>
+
+
+    <script>
+        //*******************************//
+        //*********   Axis(軸を描く)  ************//
+        //*******************************//
+
+        var margin = {top: 20, right: 20, bottom: 30, left: 40}
+
+        var width = 700 - margin.left - margin.right; //margin分を引いた軸の中の幅
+        var height = 400 - margin.top - margin.bottom; //同じくmarign分を引いた軸の中の高さ
+
+        let svg = d3.select("body").append("svg")
+                    .attr("width", width + margin.left + margin.right) //svgの描画エリアはmarginを含んだ広いサイズ（700）をとる
+                    .attr("height", height + margin.top + margin.bottom) //同上
+                    .append("g")　//svgの下にgroup要素を作成して
+                        .attr("transform", `translate(${margin.left}, ${margin.top})`)//group要素はmarginの左と上分を移動しておく
+
+        var gdp = [
+                    {年: 2007, gdp: 524, 増減: "up"},
+                    {年: 2008, gdp: 518, 増減: "down"},
+                    {年: 2009, gdp: 490, 増減: "down"},
+                    {年: 2010, gdp: 512, 増減: "up"},
+                    {年: 2011, gdp: 510, 増減: "down"},
+                    {年: 2012, gdp: 517, 増減: "up"},
+                    {年: 2013, gdp: 525, 増減: "up"}
+                    ];
+        
+        var xScale = d3.scale.linear()
+                        .domain([2007,2014])
+                        .range([0,width]);
+        
+        var yScale = d3.scale.linear()
+                        .domain([480,530])
+                        .range([height,0]);
+        
+        var colorCategoryScale = d3.scale.category10();                    
+
+        svg.selectAll("circle")
+            .data(gdp)
+            .enter()
+            .append("circle")
+            .attr("r",10)
+            .attr("fill", function(d){ return colorCategoryScale(d["増減"]); })
+            .attr("cx", function(d){ return xScale(d["年"]); })
+            .attr("cy", function(d){ return yScale(d["gdp"]); });
+
+         //軸の設定
+         let xAxis = d3.svg.axis()
+                        .scale(xScale)
+                        .orient("bottom")
+                        .tickSize(6, -height)//
+                        .tickFormat((d) => d+ "年") //単位づけ
+
+         let yAxis = d3.svg.axis()
+                        .ticks(5)
+                        .scale(yScale) //スケールの設定が必要
+                        .orient("left") //方向
+                        .tickSize(6, -width);
+
+         // g(グループ要素)の中でyAxisをcallして、軸を作る。
+         // g要素が必須というわけではなく、
+         //  yaxisをcallするといろんな要素ができるので、まとめて管理できるように。
+         svg.append("g")
+            .attr("class", "y axis") 
+            .call(yAxis)
+            .append("text")
+                .attr("y", -10)
+                .attr("x",10)
+                .style("text-anchor", "start")
+                .text("GDP(円)")
+
+         svg.append("g")
+            .attr("class", "x axis") //class属性
+            .attr("transform", `translate(0, ${height})` )//基本は上にあるので、transformで移動するー
+            .call(xAxis)
+
+         /**  path  **/
+         var line = d3.svg.line()
+            .x( (d) => xScale(d["年"]) )
+            .y( (d) => yScale(d["gdp"]) )
+            .interpolate("linear") //線の形を決める https://www.dashingd3js.com/svg-paths-and-d3js
+            //.interpolate("cardinal"); // 線の形を決める。
+            
+
+
+        svg.append("path")
+            .datum(gdp) //dataの読み込み 
+            .attr("class", "line")
+            .attr("d", line) //作成したlineを入れてpathを作成する。
+
+        /** arc **/
+        var arc = d3.svg.arc()
+                    .innerRadius(80)
+                    .outerRadius(200)
+                    .startAngle(1)
+                    .endAngle(3);                
+         svg.append("path")
+            .attr("d", arc)
+
+    </script>
+
+    <!-- 軸の属性を決めている。特にfill:none;にしないと真っ黒になる。-->
+    <style>
+        .axis text {
+            font: 10px sans-serif;
+        }
+    
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2;
+            shape-rendering: crispEdges;
+        }
+
+        .axis path {
+            /*
+            fillとopacityで半透明な背景色。
+            */
+            fill: Aquamarine;
+            opacity: 0.1;
+            stroke: #000;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+ 
+        .axis line {
+          stroke: #000;
+          stroke-width: 1;
+          shape-rendering: crispEdges;
+        }
+ 
+        .line {
+          fill: none;
+          stroke: DarkGreen;
+          stroke-width: 1.5px;
+        }
+             
+    </style>
+
+
+
+    
+</body>
+
+</html>
