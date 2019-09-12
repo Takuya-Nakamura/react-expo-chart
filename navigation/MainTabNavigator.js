@@ -9,13 +9,15 @@ import SettingsScreen from '../screens/SettingsScreen';
 import SampleChartScreen from '../screens/SampleChartScreen';
 import CircularChartScreen from '../screens/CircularChartScreen';
 import LineDrawScreen from '../screens/LineDrawScreen';
-
+import BarChartScreen from '../screens/BarChartScreen';
+import AxisScreen from '../screens/AxisScreen';
+import RadorScreen from '../screens/RadorScreen';
+import BarSplitScreen from '../screens/BarSplitScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 });
-
 
 // Sample
 const SampleChartStack = createStackNavigator({SampleChartScreen});
@@ -35,13 +37,41 @@ LineDrawChartStack.navigationOptions = {
   tabBarLabel: 'Line',
 };
 
+// BarChart
+const BarChartStack = createStackNavigator({BarChartScreen});
+BarChartStack.navigationOptions = {
+  tabBarLabel: 'Bar',
+};
+
+// AxisChart
+const AxisChartStack = createStackNavigator({AxisScreen});
+AxisChartStack.navigationOptions = {
+  tabBarLabel: 'Axis',
+};
+
+// RadorChart
+const RadorChartStack = createStackNavigator({RadorScreen});
+RadorChartStack.navigationOptions = {
+  tabBarLabel: 'Rador',
+};
+
+// BarSplit
+const BarSplitStack = createStackNavigator({BarSplitScreen});
+BarSplitStack.navigationOptions = {
+  tabBarLabel: 'BarSplit',
+};
 
 // tab
 let tabNavigator = createBottomTabNavigator(
   {
+    BarSplitStack,
+    RadorChartStack,
     CircularChartStack,
-    SampleChartStack,
     LineDrawChartStack,
+    BarChartStack,
+    AxisChartStack,
+    SampleChartStack,
+
   },
   {
     tabBarOptions: {
@@ -53,6 +83,7 @@ let tabNavigator = createBottomTabNavigator(
         borderTopWidth: 2, 
         borderTopColor: '#5ab4bd' ,
       },
+
       tabStyle:{
         borderRightWidth: 2, 
         borderRightColor: '#5ab4bd',

@@ -72,8 +72,8 @@ export default class LineDraw extends Component {
     //幅はtani*10あります
     // tani * 10 /100が1%です。 
     // percent -100 の値 割合 をstartAngleに追加すればOK
-    let startPoint = 20
-    let endPoint  = 80
+    let startPoint = 10
+    let endPoint  = 90
     let offset =  (100 - percent)
     let startAngle = startBase + tani*(startPoint + (offset * (endPoint-startPoint)/100) )
     let endAngle = startBase + tani * endPoint //固定
