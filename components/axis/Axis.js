@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { G, Line, Path, Rect, Text } from 'react-native-svg'
+import { G, Line, Path, Rect, Text, Button } from 'react-native-svg'
 import * as d3scale from 'd3-scale'
 
 
@@ -29,24 +29,16 @@ export class Axis extends Component{ //export defaultにするとエラーにな
       : this.getTickPoints(vertical, x, endX, ticks)
 
   
-    console.log("##### main ####")  
-    console.log(`vertical:${vertical}`) 
-    console.log(`x:${x}`)
-    console.log(`endX:${endX}`)
-    console.log(`y:${y}`)
-    console.log(`endy:${endY}`)
-    //console.log(tickPoints)
-
-  
     return (
+
       <G >
         <Line
-           stroke='#000'
-           strokeWidth='3'
-           x1={x}
-           x2={endX}
-           y1={y}
-           y2={endY} />
+			stroke='#000'
+			strokeWidth='3'
+			x1={x}
+			x2={endX}
+	   		y1={y}
+			y2={endY} />
 
         {/* 目盛 */}
         {console.log("#### tickPoints ####")}
@@ -95,45 +87,12 @@ export class Axis extends Component{ //export defaultにするとエラーにな
             }
 
           )}
-   
       </G>
+              
+
     )
 
 
-    // return (
-    //   <G fill='none'>
-    //     <Line
-    //       stroke='red'
-    //       strokeWidth='5'
-    //       x1={x}
-    //       x2={endX}
-    //       y1={y}
-    //       y2={endY} />
-
-    //     {tickPoints.map(
-    //        pos => <Line
-    //                 key={pos}
-    //                 stroke='#000'
-    //                 strokeWidth='3'
-    //                 x1={vertical ? x : pos}
-    //                 y1={vertical ? pos : y}
-    //                 x2={vertical ? x - TICKSIZE : pos}
-    //                 y2={vertical ? pos : y + TICKSIZE} />
-    //      )}
-    //     {tickPoints.map(
-    //        pos => <Text
-    //                 key={pos}
-    //                 fill='#000'
-    //                 stroke='#000'
-    //                 fontSize='30'
-    //                 textAnchor='middle'
-    //                 x={vertical ? x - 2 * TICKSIZE : pos}
-    //                 y={vertical ? pos : y + 2 * TICKSIZE}>
-    //                 {typeof startVal === 'number' ? Math.round(scale(pos), 2) : dateToShortString(scale(pos))}
-    //               </Text>
-    //      )}
-    //   </G>
-    // )
   }
 
   getTickPoints (vertical, start, end, numTicks) {

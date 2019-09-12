@@ -12,7 +12,7 @@ import LineDrawScreen from '../screens/LineDrawScreen';
 import BarChartScreen from '../screens/BarChartScreen';
 import AxisScreen from '../screens/AxisScreen';
 import RadorScreen from '../screens/RadorScreen';
-import BarSplitScreen from '../screens/BarSplitScreen';
+import RatioBarScreen from '../screens/RatioBarScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -56,23 +56,23 @@ RadorChartStack.navigationOptions = {
 };
 
 // BarSplit
-const BarSplitStack = createStackNavigator({BarSplitScreen});
-BarSplitStack.navigationOptions = {
-  tabBarLabel: 'BarSplit',
+const RatioBarScreenStack = createStackNavigator({RatioBarScreen});
+RatioBarScreenStack.navigationOptions = {
+  tabBarLabel: 'RatioBar',
 };
 
 // tab
 let tabNavigator = createBottomTabNavigator(
   {
-    BarSplitStack,
     RadorChartStack,
+    AxisChartStack,
     CircularChartStack,
     LineDrawChartStack,
     BarChartStack,
-    AxisChartStack,
+    RatioBarScreenStack,
     SampleChartStack,
-
   },
+  
   {
     tabBarOptions: {
       activeTintColor: '#ffffff',

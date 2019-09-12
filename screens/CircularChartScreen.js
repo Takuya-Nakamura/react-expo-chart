@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import {
-  ART,
-  AppRegistry,
-  StyleSheet,
   View,
   Text as Ntext,
   Dimensions,
@@ -15,7 +12,6 @@ import * as d3shape from 'd3-shape'
 console.disableYellowBox = true
 
 // react-native-svg
-//import { Svg, G, Rect } from 'react-native-svg'
 import { Svg, G, Line, Rect, Text, Path, TextPath, Defs } from 'react-native-svg'
 
 // width
@@ -31,7 +27,7 @@ export default class CircularChart extends Component {
   renderButtons() {
     return (
       <View style={{ height: 60, marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-        <Button title="draw" onPress={() => this.setState({ chart: 'draw' })} />
+        <Button title="ChangeData" onPress={() => this.setState({ chart: 'draw' })} />
         <Button title="wire" onPress={() => this.setState({ chart: 'wire' })} />
       </View>
     )
@@ -122,7 +118,7 @@ export default class CircularChart extends Component {
                         />
                       </G>
                     ) // return 
-                  }else{  
+                  }else{ // if  
                     return (
                       <G>
                         <Path 
@@ -171,14 +167,11 @@ export default class CircularChart extends Component {
       .outerRadius(40)
       .startAngle((Math.PI /4)  * 2   ) //開始位置をちょっとずらすSampleChartScreen2
       .endAngle( (Math.PI /4)  * 4) 
-      path3 = arc3()
-
-      
+      path3 = arc3()      
       
       /*  foreachで円を作成していく*/
       let split_count = 4
       let angle = Math.PI / (split_count/2)
-  
       let arcs= []
   
       //全体の円を何個に分断するか
@@ -236,8 +229,9 @@ export default class CircularChart extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        {this.renderButtons()}
         {chart}
+        {this.renderButtons()}
+
       </View>
     );
   }

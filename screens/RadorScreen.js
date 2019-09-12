@@ -10,17 +10,14 @@ import * as d3scale from 'd3-scale'
 import * as d3shape from 'd3-shape'
 
 // react-native-svg
-import { Svg, G, Line, Rect, Text, Path, TextPath, Defs, Polyline, Circle } from 'react-native-svg'
+import { Svg, G, Line, Rect, Text, Path, Circle } from 'react-native-svg'
 
 // width
 let { width } = Dimensions.get('window')
-let margin =  20  // left bottom
 
-// 
-import { Axis }  from "../components/axis/Axis"
+//original utility lib
+import * as Util from "../components/Util" 
 
-
-const tickPointData =[0,1,2,3,4,5,6,7,8,9,10]
 
 //class
 export default class Rador extends Component {
@@ -31,41 +28,36 @@ export default class Rador extends Component {
 
   /* BarChart */
   renderRadorChart(){
- 
-        
     //scaleの作成
-    //x 0-10, y=0-100
     const xScale = d3scale.scaleLinear().domain([0, 10]).range([0, width])
-    const yScale = d3scale.scaleLinear().domain([0, 100]).range([0, width])
     
-    //
+    //表示したい目盛
     let ticks = [2,4,6,8,10];
 
-    //
-    let features =[
-      1,2,3,4,5
-    ]
+    //マッピングするデータ
+    let data = []
+    for (i=0; i<6; i++){
+      data.push(Util.random(1,10))
+    }
 
     let arr_axis = []    
-    for (var i = 0; i < features.length; i++) {
-      let angle = (Math.PI/2) + (2 * Math.PI * i / features.length);
-      let line_coordinate = this.angleToCoordinate(angle, 10, xScale); //10というのはvalueの位置
-      console.log(line_coordinate)
+    for (var i = 0; i < data.length; i++) {
+      let angle = (Math.PI/2) + (2 * Math.PI * i / data.length);
+      let line_coordinate = this.angleToCoordinate(angle, 10, xScale); 
       arr_axis.push(line_coordinate)
     }
 
-    //point path
-    let colors = ["darkorange", "gray", "navy"];
-    let data = [1,5,6,4,8]
+    //pointのpathの作成
     let cordinates=[]
-
     for (var i = 0; i < data.length; i ++){
       let d = data[i];
-      let color = colors[i];
-      let angle = (Math.PI/2) + (2 * Math.PI * i / features.length);
+      let angle = (Math.PI/2) + (2 * Math.PI * i / data.length); //角度方向の取得
       cordinates.push(this.angleToCoordinate(angle, d, xScale));   
     }    
-    cordinates.push(cordinates[0])//pathを閉じるように
+
+    //pathを閉じるよう最後に最初と同じ座標を入れる。
+    cordinates.push(cordinates[0])
+    //Pathの取得
     let linePath = d3shape.line()
                     .x(d=>d.x)
                     .y(d=>d.y)
@@ -100,22 +92,15 @@ export default class Rador extends Component {
   }
 
   //private 
-  /* angle と 目的の座標に渡す 座標値を返す。*/
+  /* 
+  * angleとポイントを渡すことで、ポイントの座標値を返す。
+  * angleは自分で返す
+  */
   angleToCoordinate(angle, value, scale){
     let x = Math.cos(angle) * scale(value);
     let y = Math.sin(angle) * scale(value);
     return {"x": (width + x)/2, "y": (width - y)/2};
   }
-
-  // getPathCoordinates(data_point){
-  //   let coordinates = [];
-  //   for (var i = 0; i < features.length; i++){
-  //       let ft_name = features[i];
-  //       let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
-  //       coordinates.push(angleToCoordinate(angle, data_point[ft_name]));
-  //   }
-  //   return coordinates;
-  // }
 
   //main
   render() {
@@ -123,6 +108,8 @@ export default class Rador extends Component {
       <View style={{ flex:1, borderWidth: 2, borderColor: '#000000', alignItems: 'center',}}>
         <Ntext>Rador</Ntext>
         {this.renderRadorChart()}
+        <Button title="ChangeData" onPress={() => this.setState({ flg: 0 })} />
+
       </View>
     );
   }
