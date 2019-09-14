@@ -56,14 +56,15 @@ export default class AxisDraw extends Component {
 
     //軸の文字列表示のためviewBoxを定義して左、下を拡張して表示する必要がある。
     //view box
-    let vb_x = 0 - margin
-    let vb_y = 0 - margin 
-    let vb_end_x = width + margin * 2 
-    let vb_end_y = width + margin * 2
+    let margin =(width*0.1) 
+    let vbX = -margin
+    let vbY = -margin
+    let vbEndX = width+margin*2
+    let vbEndY = width+margin*2
 
     
     return(
-      <Svg height={width}  width={width} viewBox={`${vb_x} ${vb_y} ${vb_end_x} ${vb_end_y}`} style={{borderWidth: 2, borderColor: 'red',}} >
+      <Svg height={width}  width={width} viewBox={`${vbX} ${vbY} ${vbEndX} ${vbEndY}`} style={{borderWidth: 2, borderColor: 'red',}} >
         <G>
             <Path stroke="red" fill="none" d={linePath}></Path>
 

@@ -13,6 +13,7 @@ import BarChartScreen from '../screens/BarChartScreen';
 import AxisScreen from '../screens/AxisScreen';
 import RadorScreen from '../screens/RadorScreen';
 import RatioBarScreen from '../screens/RatioBarScreen';
+import FlexScreen from '../screens/FlexScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -61,9 +62,18 @@ RatioBarScreenStack.navigationOptions = {
   tabBarLabel: 'RatioBar',
 };
 
+// Flex勉強用
+const FlexStack = createStackNavigator({FlexScreen});
+FlexStack.navigationOptions = {
+  tabBarLabel: 'Flex',
+};
+
+
 // tab
 let tabNavigator = createBottomTabNavigator(
   {
+
+    FlexStack,
     RadorChartStack,
     AxisChartStack,
     CircularChartStack,
@@ -72,7 +82,7 @@ let tabNavigator = createBottomTabNavigator(
     RatioBarScreenStack,
     SampleChartStack,
   },
-  
+
   {
     tabBarOptions: {
       activeTintColor: '#ffffff',

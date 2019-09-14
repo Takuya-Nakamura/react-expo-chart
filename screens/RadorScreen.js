@@ -62,9 +62,19 @@ export default class Rador extends Component {
                     .x(d=>d.x)
                     .y(d=>d.y)
                     (cordinates)
+    //viewBoxで svgに指定したheightやwidhtより大きい値を指定すると、
+    //viewBoxの中にsvgが縮小されて表示される。
+    //小さい値になると、そこを拡大する。
+    // svgのサイズを ViewBoxの値にと仮定した場合の比率で表示してくれる。
+    //上下左右10%広げる
+    let margin =(width*0.1) 
+    let vbX = -margin
+    let vbY = -margin
+    let vbEndX = width+margin*2
+    let vbEndY = width+margin*2
 
     return(
-      <Svg height={width} width={width} viewBox={`0 0 ${width} ${width}`}style={{borderWidth: 2, borderColor: 'blue',}} >
+      <Svg height={width} width={width} viewBox={`${vbX} ${vbY} ${vbEndX} ${vbEndY}`}style={{borderWidth: 2, borderColor: 'blue',}} >
         <G>
           {/* グリッド線のプロット(円) */}
           {

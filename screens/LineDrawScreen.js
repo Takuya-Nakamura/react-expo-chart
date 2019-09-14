@@ -91,14 +91,14 @@ export default class LineDraw extends Component {
   }
 
   /* Arc */
-  renderCurvyLineByArc(){
+  renderSvg(){
     basePath=this.getCurvePath()
     overPath=this.getCurvePath(this.state.percent)
 
 
     return (
       <Svg height={width} width={width}  style={{borderWidth: 2, borderColor: 'red',}} >
-        <Ntext>Arcを使って曲線を描く。線端の丸みはcornerRadius</Ntext>
+        <Ntext></Ntext>
         <G style={{borderWidth: 2, borderColor: 'blue',}}  x={width/2} y={width/4}>
           <Path d={basePath}  stroke="red" fill="none" strokeWidth="1" />
 
@@ -114,7 +114,7 @@ export default class LineDraw extends Component {
   render() {
     return (
       <View style={{ flex:1, borderWidth: 2, borderColor: '#000000', alignItems: 'center',}}>
-        {this.renderCurvyLineByArc()}
+        {this.renderSvg()}
         <Slider 
           value={this.state.percent}
           onValueChange={value => this.setState({ percent:value })}

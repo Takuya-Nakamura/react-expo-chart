@@ -19,7 +19,6 @@ import * as Util from "../components/Util"
 // width
 const { width } = Dimensions.get('window')
 
-
 const colors = ["#8bc9ea", "#f9d777", "#00a53c", "#f78376"]
 
 //class
@@ -67,8 +66,14 @@ export default class RatioBar extends Component {
     let totalPercent = 0
 
     //ベースの片側だけ角丸作成 Staticに作成
+    let margin =(width*0.1) 
+    let vbX = -margin
+    let vbY = -margin
+    let vbEndX = width+margin*2
+    let vbEndY = width+margin*2
+
     return(
-      <Svg height={width} width={width}  style={{borderWidth: 2, borderColor: 'red',}} >
+      <Svg height={width} width={width} viewBox={`${vbX} ${vbY} ${vbEndX} ${vbEndY}`} style={{borderWidth: 2, borderColor: 'red',}} >
         {/* symbolで三角を宣言してあとでuseで使う。 */}
         <Symbol id="symbol" viewBox="0 0 50 50" width="50" height="50">
           <Polygon
@@ -120,48 +125,47 @@ export default class RatioBar extends Component {
 
   //main
   render() {
+
     return (
-      <View style={{ flex:1, borderWidth: 2, borderColor: '#000000', alignItems: 'center',}}>
-        <Ntext>Bar Split</Ntext>
-        {this.renderBarChart()}
+      <View style={{ flex:1, borderWidth: 2, alignItems: 'Center',}}>
+            <Ntext>Bar Split</Ntext>
+            {this.renderBarChart()}
 
-        <Button title="ChangeData" onPress={() => {
-          this.setState({ 
-            left: Util.random(1,5),
-            middle: Util.random(1,5),
-            right: Util.random(1,5),
-            percent:Util.random(0,100)
-          })
-        }}/>
+            <Button title="ChangeData" onPress={() => {
+              this.setState({ 
+                left: Util.random(1,5),
+                middle: Util.random(1,5),
+                right: Util.random(1,5),
+                percent:Util.random(0,100)
+              })
+            }}/>
 
-        <Input
-          placeholder={this.state.left}
-          onChangeText={(value) =>{
-            this.setState({left:Number(value)})
-          } }
+            <Input
+              placeholder={this.state.left}
+              onChangeText={(value) =>{
+                this.setState({left:Number(value)})
+              } }
+              />
+            <Input
+              placeholder={this.state.middle}
+              onChangeText={(value) =>{
+                this.setState({middle:Number(value)})
+              } }
+            />
+            <Input
+              placeholder={this.state.right}
+              onChangeText={(value) =>{
+                this.setState({right:Number(value)})
+              } }
+            />
 
-        />
-        <Input
-          placeholder={this.state.middle}
-          onChangeText={(value) =>{
-            this.setState({middle:Number(value)})
-          } }
-
-        />
-        <Input
-          placeholder={this.state.right}
-          onChangeText={(value) =>{
-            this.setState({right:Number(value)})
-          } }
-        />
-
-        <Slider 
-          value={this.state.percent}
-          onValueChange={value => this.setState({ percent:value })}
-          maximumValue={100}
-          minimumValue={0}
-          width={"80%"}          
-        />
+            <Slider 
+              value={this.state.percent}
+              onValueChange={value => this.setState({ percent:value })}
+              maximumValue={100}
+              minimumValue={0}
+              width={"100%"}        
+            />
       </View>
     );
   }
