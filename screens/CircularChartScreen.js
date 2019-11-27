@@ -77,10 +77,7 @@ export default class CircularChart extends Component {
     colors.push( ["#fff4f4","#ffd5d5", "#ff8080", "#ff2b2b", "#d50000",  "#800000"] ) //red
     colors.push( ["#ffffff", "#f4f4f4", "#e9e9e9", "#dfdfdf", "#c9c9c9", "#5f5f5f"] )//gray
 
-    const label =[
-      "タンパク質","ビタミンb1","ビタミンb2","ナイアシン","ビタミン","葉酸","バントテン酸",
-      "ビオチン","ナトリウム","カリウム","カルシウム","マグネシウム","リン","モリブデン"
-    ]
+    const label =["1","2","3","4","5","6","7","8","9","10","11","12","13","14"]
 
     return (
       <View style={{ alignItems: 'center' }}>
